@@ -1,0 +1,46 @@
+#Weatherman
+---
+Info Sources: 
+    - County/Zone database: http://www.nws.noaa.gov/geodata/catalog/wsom/html/cntyzone.htm
+    - Event code info: http://wiki.citizen.apps.gov/nws_developers/index.php/Eventcode
+    - CAP info: http://wiki.citizen.apps.gov/nws_developers/index.php/Category:Common_Alerting_Protocol
+    - ATOM info: http://alerts.weather.gov/#TechNotes
+    - National ATOM feed: http://alerts.weather.gov/cap/us.php?x=1
+
+Todo:
+    - DONE: Import zone db into sqlite (or something parseable)
+    - DONE: Find an import db of alert types
+    - Parse ATOM feed:
+        - Break into separate alerts, and for each alert:
+            - DONE: Determine what zones apply
+            - DONE: Determine what type of warnings apply
+            - DONE: Determine alert ID
+            - DONE: Apply xsl for full-text version
+            - DONE: Create compact version for txt
+    - Process alerts:
+        - DONE: Ignore previously seen alerts
+        - Find all users with relevant zones selected:
+	  - Idea: use a dictionary of "zone: user"
+        - Determine message types and send appropriate messages
+        - Log all messages sent.
+        - DONE: Record alert ID as seen
+    - Create web registration interface:
+        - Select email or txt notifications
+        - Select state
+        - Select zone
+        - Select alert types
+        - To modify registration, just re-register
+    - Create deregistration interface
+
+Objects:
+    Alert:
+        - [zones]
+        - type
+        - ID
+        - full text
+        - sms txt
+    User:
+        - [zones]
+        - [desired alerts]
+        - contact address(ID)
+        - compact messages (true|false)
